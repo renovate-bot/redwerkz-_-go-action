@@ -17,21 +17,33 @@ Describe how to use your action here.
 ### Example workflow
 
 ```yaml
-name: My Workflow
-on: [push, pull_request]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: Run action
-
-      # Put your action repo here
-      uses: me/myaction@master
-
-      # Put an example of your mandatory inputs here
-      with:
-        myInput: world
+name: "Find and Replace"
+description: "Find and replace a string in your project files"
+author: "N Tomlinson"
+inputs:
+  include:
+    description: "A glob of files to include in our find and replace"
+    default: "**/*.html" # Include everything by 
+    required: false
+  exclude:
+    description: "A glob of files to exclude in our find and replace"
+    default: ".git/**" # Ignore the `.git` directory by default
+    required: false
+  find:
+    description: "fonts\\.googleapis\\.{2,3}\\/css2\\?"
+    required: true
+  replace:
+    description: "api.fonts.coollabs.io"
+    required: true
+  regex:
+    description: "Find as a regular expression instead of a fixed string"
+    required: false
+outputs:
+  modifiedFiles:
+    description: "The number of files which have been modified"
+runs:
+  using: "docker"
+  image: "Dockerfile"
 ```
 
 ### Inputs
